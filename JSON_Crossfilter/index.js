@@ -3,7 +3,6 @@ d3.json('./perCapitaLandUseRequirements.json', function(dataIn){
 
     console.log(dataIn);
 
-    /*
     //set up initial crossfilter - this just takes a look at the data and catalogs it to make things more efficient
     cf = crossfilter(dataIn);
 
@@ -17,6 +16,5 @@ d3.json('./perCapitaLandUseRequirements.json', function(dataIn){
 
     console.log(usData);
 
-    */
 
 });
