@@ -1,6 +1,6 @@
 var svg = d3.select('svg').append('g').attr('transform','translate(100,100)');
 
-clicked=true;
+var clicked=true;
 
 var axislabel = ["None", "Diploma from Dance School", "Diploma from Performing Arts School", "Bachelor's Degree", " Advanced Diploma from Dance School", "Advanced Diploma from Performing Arts School","Graduate Degree"];
 
@@ -78,6 +78,8 @@ d3.csv('./data.csv', function(dataIn) {
         .attr('r', 5)
         .attr('fill', "slategrey");
 
+    $('[data-toggle="tooltip"]').tooltip();
+
     drawPoints(formerDancers);
 
 });
@@ -93,7 +95,11 @@ function drawPoints(pointData){
         })
         .attr('cy',function(d){
             return ScaleY(d.A8ABEGTR);
-        });
+        })
+        .attr('data-toggle', 'tooltip')
+        .attr('title', function(d){
+            return A3AGEGP
+    });
 
 
     svg.selectAll('.ageProf')
@@ -106,5 +112,19 @@ function drawPoints(pointData){
         .attr('cy',function(d){
             return ScaleY(d.A8CBGPCR);
         });
+
+}
+
+function buttonClicked(){
+
+    if(clicked == true){
+        drawPoints(currentDancers);
+        clicked = false;
+    }
+    else{
+        drawPoints(formerDancers);
+        clicked = true;
+    }
+
 
 }
