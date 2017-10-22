@@ -13,7 +13,7 @@ ScaleY = d3.scaleLinear().range([400, 0]);
 //import the data from the .csv file
 d3.csv('./data.csv', function(dataIn) {
 
-    cf = crossfilter(dataIn);
+    /*cf = crossfilter(dataIn);
     //console.log(dataIn);
     //filter data!!
     dancerStatus = cf.dimension(function (d) {
@@ -22,16 +22,29 @@ d3.csv('./data.csv', function(dataIn) {
     currentDancer = dancerStatus.filterExact("1").top(Infinity);
     formerDancer = dancerStatus.filterExact("2").top(Infinity);
 
-    //console.log(formerDancer);
-    //console.log(currentDancer);
+    console.log(formerDancer);
+    console.log(currentDancer);
+    */
 
-    ScaleX.domain(dancerStatus.map(function(d) {
-        return A1CURFOR
+    nestedData = d3.nest()
+        .key(function (d) {
+            return d.A1CURFOR
+        })
+        .entries(dataIn);
+
+    console.log(nestedData);
+    var currentDancers = nestedData.filter(function(d){return d.key == '1'})[0].values;
+    var formerDancers = nestedData.filter(function(d){return d.key == '2'})[0].values;
+    console.log(currentDancers);
+    console.log(formerDancers);
+
+    ScaleX.domain(formerDancers.map(function (d) {
+        return d.A6QUALS1
     }));
 
-    //scaleY.domain([0,d3.max(loadData.map(function(d){
-    //    return +d.totalPop
-   // }))]);
+
+
+
 
     //MAKE THE AXES
     svg.append("g")
