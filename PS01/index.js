@@ -7,8 +7,7 @@ var axislabel = ["None", "Diploma from Dance School", "Diploma from Performing A
 //axes
 //var ScaleX = d3.scalePoint().domain(["None", "Diploma from Dance School", "Diploma from Performing Arts School", "Bachelor's Degree", " Advanced Diploma from Dance School", "Advanced Diploma from Performing Arts School","Graduate Degree"]).range([0, 800]);
 var ScaleX = d3.scaleBand().rangeRound([0, 600]).padding(0.1);
-ScaleY = d3.scaleLinear().range([400, 0]);
-//MAKE THE AXES
+var ScaleY = d3.scaleLinear().range([400, 0]);
 
 
 //AXIS LABELS
@@ -55,6 +54,8 @@ d3.csv('./data.csv', function(dataIn) {
         return d.A6QUALS1
     }));
 
+    ScaleY.domain([0,30]);
+
     svg.append("g")
         .attr('transform','translate(0,400)')
         .call(d3.axisBottom(ScaleX));
@@ -73,7 +74,6 @@ d3.csv('./data.csv', function(dataIn) {
 });
 
 function drawPoints(pointData){
-
     ScaleY.domain([0, d3.max(pointData.map(function(d){return +d.A8ABEGTR}))]);
 
     svg.selectAll('.yaxis')
