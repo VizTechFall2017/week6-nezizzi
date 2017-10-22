@@ -6,7 +6,7 @@ var axislabel = ["None", "Diploma from Dance School", "Diploma from Performing A
 
 //axes
 //var ScaleX = d3.scalePoint().domain(["None", "Diploma from Dance School", "Diploma from Performing Arts School", "Bachelor's Degree", " Advanced Diploma from Dance School", "Advanced Diploma from Performing Arts School","Graduate Degree"]).range([0, 800]);
-var ScaleX = d3.scaleBand().rangeRound([0, 600]).padding(0.1);
+var ScaleX = d3.scalePoint().domain(["1", "2", "3", "4", "5", "6","7"]).range([0, 800]);
 var ScaleY = d3.scaleLinear().range([400, 0]);
 
 
@@ -62,36 +62,49 @@ d3.csv('./data.csv', function(dataIn) {
     svg.append("g")
         .call(d3.axisLeft(ScaleY));
 
-    svg.selectAll('rect')
+    svg.selectAll('circles')
         .data(formerDancers)
         .enter()
-        .append('rect')
-        .attr('class','bars')
-        .attr('fill', "slategray");
+        .append('circle')
+        .attr('class','ageBeg')
+        .attr('r', 5)
+        .attr('fill', "rebeccapurple");
+
+    svg.selectAll('circles')
+        .data(formerDancers)
+        .enter()
+        .append('circle')
+        .attr('class','ageProf')
+        .attr('r', 5)
+        .attr('fill', "slategrey");
 
     drawPoints(formerDancers);
 
 });
 
 function drawPoints(pointData){
-    ScaleY.domain([0, d3.max(pointData.map(function(d){return +d.A8ABEGTR}))]);
 
-    svg.selectAll('.yaxis')
-        .call(d3.axisLeft(ScaleY));
-
-    svg.selectAll('rect')
+    svg.selectAll('.ageBeg')
         .data(pointData)
-        .attr('x',function(d){
+        .transition()
+        .ease(d3.easeSin)
+        .attr('cx',function(d){   //look up values for all the attributes that might have changed, and draw the new circles
             return ScaleX(d.A6QUALS1);
         })
-        .attr('y',function(d){
+        .attr('cy',function(d){
             return ScaleY(d.A8ABEGTR);
+        });
+
+
+    svg.selectAll('.ageProf')
+        .data(pointData)
+        .transition()
+        .ease(d3.easeSin)
+        .attr('cx',function(d){
+            return ScaleX(d.A6QUALS1);
         })
-        .attr('width',function(d){
-            return ScaleX.bandwidth();
-        })
-        .attr('height',function(d){
-            return 400 - ScaleY(d.A8ABEGTR);  //400 is the beginning domain value of the y axis, set above
+        .attr('cy',function(d){
+            return ScaleY(d.A8CBGPCR);
         });
 
 }
