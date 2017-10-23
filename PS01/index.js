@@ -22,6 +22,11 @@ svg.append('text')
     .text('Age')
     .attr('transform', 'translate(-50,200)rotate(270)');
 
+var div = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
+
 //import the data from the .csv file
 d3.csv('./data.csv', function(dataIn) {
 
@@ -78,8 +83,8 @@ d3.csv('./data.csv', function(dataIn) {
         .attr('r', 5)
         .attr('fill', "slategrey");
 
-    $('[data-toggle="tooltip"]').tooltip();
 
+    //$('[data-toggle="tooltip"]').tooltip();
     drawPoints(formerDancers);
 
 });
@@ -113,6 +118,8 @@ function drawPoints(pointData){
             return ScaleY(d.A8CBGPCR);
         });
 
+
+    $('[data-toggle="tooltip"]').tooltip();
 }
 
 function buttonClicked(){
