@@ -121,7 +121,7 @@ d3.csv('./data.csv', function(dataIn) {
 
 
 
-    $('[data-toggle="tooltip"]').tooltip();
+
     drawPoints(currentDancers);
 
 });
@@ -135,12 +135,26 @@ function drawPoints(pointData){
             return ScaleX(d.A6QUALS1);
         })
         .attr('cy',function(d){
-            return ScaleY(d.A8CBGPCR);
+            return ScaleY(d.A8ABEGTR);
         })
         .attr('data-toggle', 'tooltip')
         .attr('title', function(d){
-            return  A8CBGPCR;
-    });
+            return  d.A8ABEGTR;
+        })
+        .on("mouseover", function(d) {
+            div.transition()
+                .duration(200)
+                .style("opacity", .9);
+            div.html(d.A8ABEGTR)
+                .style("left", (d3.event.pageX) + "px")
+                .style("top", (d3.event.pageY - 28) + "px");
+        })
+        .on("mouseout", function(d) {
+            div.transition()
+                .duration(500)
+                .style("opacity", 0);
+        });
+
 
 
     svg.selectAll('.prof')
@@ -150,10 +164,28 @@ function drawPoints(pointData){
         })
         .attr('cy',function(d) {
             return ScaleY(d.A8CBGPCR);
+        })
+        .attr('data-toggle', 'tooltip')
+        .attr('title', function(d){
+            return  d.A8CBGPCR;
+        })
+        .on("mouseover", function(d) {
+        div.transition()
+            .duration(200)
+            .style("opacity", .9);
+        div.html(d.A8CBGPCR)
+            .style("left", (d3.event.pageX) + "px")
+            .style("top", (d3.event.pageY - 28) + "px");
+         })
+        .on("mouseout", function(d) {
+            div.transition()
+                .duration(500)
+                .style("opacity", 0);
         });
 
 
 
+    //$('[data-toggle="tooltip"]').tooltip();
 }
 
 function buttonClicked(){
