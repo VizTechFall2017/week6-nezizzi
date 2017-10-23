@@ -77,7 +77,9 @@ d3.csv('./data.csv', function(dataIn) {
         .attr('r', 5)
         .attr('fill', "rebeccapurple")
         .attr('data-toggle', 'tooltip')
-        .attr('title', 'Age began Professional Career')
+        .attr('title', function(d){
+            return d.A8CBGPCR
+        })
         .on("mouseover", function(d) {
             div.transition()
                 .duration(200)
@@ -100,7 +102,9 @@ d3.csv('./data.csv', function(dataIn) {
         .attr('r', 5)
         .attr('fill', "slategrey")
         .attr('data-toggle', 'tooltip')
-        .attr('title', 'Age began Professional Career')
+        .attr('title', function(d){
+            return d.A8CBGPCR
+        })
         .on("mouseover", function(d) {
             div.transition()
                 .duration(200)
