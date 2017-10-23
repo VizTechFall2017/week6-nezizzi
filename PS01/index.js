@@ -1,6 +1,8 @@
 var svg = d3.select('svg').append('g').attr('transform','translate(100,100)');
 
 var clicked=true;
+var formerDancers;
+var currentDancers;
 
 var axislabel = ["None", "Diploma from Dance School", "Diploma from Performing Arts School", "Bachelor's Degree", " Advanced Diploma from Dance School", "Advanced Diploma from Performing Arts School","Graduate Degree"];
 
@@ -68,68 +70,96 @@ d3.csv('./data.csv', function(dataIn) {
         .call(d3.axisLeft(ScaleY));
 
     svg.selectAll('circles')
-        .data(formerDancers)
+        .data(currentDancers)
         .enter()
         .append('circle')
-        .attr('class','ageBeg')
+        .attr('class','beg')
         .attr('r', 5)
-        .attr('fill', "rebeccapurple");
+        .attr('fill', "rebeccapurple")
+        .attr('data-toggle', 'tooltip')
+        .attr('title', 'Age began Professional Career')
+        .on("mouseover", function(d) {
+            div.transition()
+                .duration(200)
+                .style("opacity", .9);
+            div.html(d.A8CBGPCR)
+                .style("left", (d3.event.pageX) + "px")
+                .style("top", (d3.event.pageY - 28) + "px");
+        })
+        .on("mouseout", function(d) {
+            div.transition()
+                .duration(500)
+                .style("opacity", 0);
+        });
 
     svg.selectAll('circles')
-        .data(formerDancers)
+        .data(currentDancers)
         .enter()
         .append('circle')
-        .attr('class','ageProf')
+        .attr('class','prof')
         .attr('r', 5)
-        .attr('fill', "slategrey");
+        .attr('fill', "slategrey")
+        .attr('data-toggle', 'tooltip')
+        .attr('title', 'Age began Professional Career')
+        .on("mouseover", function(d) {
+            div.transition()
+                .duration(200)
+                .style("opacity", .9);
+            div.html(d.A8CBGPCR)
+                .style("left", (d3.event.pageX) + "px")
+                .style("top", (d3.event.pageY - 28) + "px");
+        })
+        .on("mouseout", function(d) {
+            div.transition()
+                .duration(500)
+                .style("opacity", 0);
+        });
 
 
-    //$('[data-toggle="tooltip"]').tooltip();
-    drawPoints(formerDancers);
+
+    $('[data-toggle="tooltip"]').tooltip();
+    drawPoints(currentDancers);
 
 });
 
+
 function drawPoints(pointData){
 
-    svg.selectAll('.ageBeg')
+    svg.selectAll('.beg')
         .data(pointData)
-        .transition()
-        .ease(d3.easeSin)
         .attr('cx',function(d){   //look up values for all the attributes that might have changed, and draw the new circles
             return ScaleX(d.A6QUALS1);
         })
         .attr('cy',function(d){
-            return ScaleY(d.A8ABEGTR);
+            return ScaleY(d.A8CBGPCR);
         })
         .attr('data-toggle', 'tooltip')
         .attr('title', function(d){
-            return A3AGEGP
+            return  A8CBGPCR;
     });
 
 
-    svg.selectAll('.ageProf')
+    svg.selectAll('.prof')
         .data(pointData)
-        .transition()
-        .ease(d3.easeSin)
         .attr('cx',function(d){
             return ScaleX(d.A6QUALS1);
         })
-        .attr('cy',function(d){
+        .attr('cy',function(d) {
             return ScaleY(d.A8CBGPCR);
         });
 
 
-    $('[data-toggle="tooltip"]').tooltip();
+
 }
 
 function buttonClicked(){
 
     if(clicked == true){
-        drawPoints(currentDancers);
+        drawPoints(formerDancers);
         clicked = false;
     }
     else{
-        drawPoints(formerDancers);
+        drawPoints(currentDancers);
         clicked = true;
     }
 
