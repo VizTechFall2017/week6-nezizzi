@@ -73,19 +73,21 @@ d3.csv('./data.csv', function(dataIn) {
     var LABEL= axislabel.forEach(function (d) {
         testMap.set(d.value, d.text);
     });
+    console.log(testMap);
     console.log(testMap.get(5));
 
     ScaleX.domain(currentDancers.map(function(d){
         return d.A6QUALS1
     }));
-
-
     ScaleY.domain([0,30]);
 
     svg.append("g")
         .attr('transform','translate(0,400)')
         .call(d3.axisBottom(ScaleX));
-        //.call(d3.axisBottom(LABEL));
+        /*.call(d3.axisBottom(testMap.get(function(d){
+            return d.value
+        }
+        )));*/
 
 
     svg.append("g")
