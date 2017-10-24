@@ -61,7 +61,6 @@ d3.csv('./data.csv', function(dataIn) {
     ScaleX.domain(currentDancers.map(function (d) {
         return d.A6QUALS1
     }));
-
     ScaleY.domain([0,30]);
 
     svg.append("g")
@@ -155,6 +154,9 @@ function drawPoints(pointData){
 
     //$('[data-toggle="tooltip"]').tooltip();
 }
+
+console.log(currentDancers);
+console.log(formerDancers);
 
 function buttonClicked(){
 
