@@ -84,7 +84,7 @@ d3.csv('./data.csv', function(dataIn) {
         {value: "D", text: "Did not answer"}
     ];
 
-    /*(ScaleX.domain(function(testMap){
+    /*ScaleX.domain(function(testMap){
         axislabel.forEach(function (d) {
             testMap.set(d.value, d.text);
         })
@@ -92,7 +92,9 @@ d3.csv('./data.csv', function(dataIn) {
     });
     console.log(testMap.get(5));*/
 
-    
+    ScaleX.domain(currentDancers.map(function(d){
+        return d.A6QUALS1
+    }));
 
     ScaleY.domain([0,30]);
 
