@@ -75,24 +75,7 @@ d3.csv('./data.csv', function(dataIn) {
         .append('circle')
         .attr('class','beg')
         .attr('r', 5)
-        .attr('fill', "rebeccapurple")
-        .attr('data-toggle', 'tooltip')
-        .attr('title', function(d){
-            return d.A8CBGPCR
-        })
-        .on("mouseover", function(d) {
-            div.transition()
-                .duration(200)
-                .style("opacity", .9);
-            div.html(d.A8CBGPCR)
-                .style("left", (d3.event.pageX) + "px")
-                .style("top", (d3.event.pageY - 28) + "px");
-        })
-        .on("mouseout", function(d) {
-            div.transition()
-                .duration(500)
-                .style("opacity", 0);
-        });
+        .attr('fill', "rebeccapurple");
 
     svg.selectAll('circles')
         .data(currentDancers)
@@ -100,27 +83,7 @@ d3.csv('./data.csv', function(dataIn) {
         .append('circle')
         .attr('class','prof')
         .attr('r', 5)
-        .attr('fill', "slategrey")
-        .attr('data-toggle', 'tooltip')
-        .attr('title', function(d){
-            return d.A8CBGPCR
-        })
-        .on("mouseover", function(d) {
-            div.transition()
-                .duration(200)
-                .style("opacity", .9);
-            div.html(d.A8CBGPCR)
-                .style("left", (d3.event.pageX) + "px")
-                .style("top", (d3.event.pageY - 28) + "px");
-        })
-        .on("mouseout", function(d) {
-            div.transition()
-                .duration(500)
-                .style("opacity", 0);
-        });
-
-
-
+        .attr('fill', "slategrey");
 
     drawPoints(currentDancers);
 
@@ -198,6 +161,4 @@ function buttonClicked(){
         drawPoints(currentDancers);
         clicked = true;
     }
-
-
 }
