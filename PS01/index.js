@@ -1,6 +1,7 @@
 var svg = d3.select('svg').append('g').attr('transform','translate(100,100)');
 
 var clicked = true;
+var nestedData;
 var formerDancers;
 var currentDancers;
 
@@ -8,20 +9,6 @@ var currentDancers;
 //var ScaleX = d3.scalePoint().domain(["None", "Diploma from Dance School", "Diploma from Performing Arts School", "Bachelor's Degree", " Advanced Diploma from Dance School", "Advanced Diploma from Performing Arts School","Graduate Degree"]).range([0, 800]);
 var ScaleX = d3.scalePoint().domain(["1", "2", "3", "4", "5", "6","7"]).range([0, 800]);
 var ScaleY = d3.scaleLinear().range([400, 0]);
-
-var testMap = d3.map();
-
-var axislabel = [{value: 1, text: "None"},
-    {value: 2, text: "Diploma from Dance School"},
-    {value: 3, text: "Diploma from Performing Arts School"},
-    {value: 4, text: "Bachelor's Degree"},
-    {value: 5, text: " Advanced Diploma from Dance School"},
-    {value: 6, text: "Advanced Diploma from Performing Arts School"},
-    {value: 7, text: "Graduate Degree"},
-    {value: 8, text: "Other"},
-    {value: "D", text: "Did not answer"}
-];
-
 
 //AXIS LABELS
 svg.append('text')
@@ -63,13 +50,12 @@ d3.csv('./data.csv', function(dataIn) {
             return d.A1CURFOR
         })
         .entries(dataIn);
+    console.log(nestedData);
 
-    //console.log(nestedData);
     var currentDancers = nestedData.filter(function(d){return d.key == '1'})[0].values;
     var formerDancers = nestedData.filter(function(d){return d.key == '2'})[0].values;
-
-    //console.log(currentDancers);
-    //console.log(formerDancers);
+    console.log(currentDancers);
+    console.log(formerDancers);
 
     //x axis labels
     var testMap = d3.map();
@@ -84,6 +70,11 @@ d3.csv('./data.csv', function(dataIn) {
         {value: "D", text: "Did not answer"}
     ];
 
+    var LABEL= axislabel.forEach(function (d) {
+        testMap.set(d.value, d.text);
+    });
+    console.log(testMap.get(5));
+
     ScaleX.domain(currentDancers.map(function(d){
         return d.A6QUALS1
     }));
@@ -93,12 +84,9 @@ d3.csv('./data.csv', function(dataIn) {
 
     svg.append("g")
         .attr('transform','translate(0,400)')
-        .call(d3.axisBottom(ScaleX))
-        /*.call(d3.axisBottom(axislabel.forEach(function (d) {
-            testMap.set(d.value, d.text);
-            console.log(testMap.get(5));
-        })));*/
-    console.log(testMap.get(5));
+        .call(d3.axisBottom(ScaleX));
+        //.call(d3.axisBottom(LABEL));
+
 
     svg.append("g")
         .call(d3.axisLeft(ScaleY));
@@ -190,8 +178,8 @@ function drawPoints(pointData){
     //$('[data-toggle="tooltip"]').tooltip();
 }
 
-//console.log(currentDancers);
-//console.log(formerDancers);
+console.log(currentDancers);
+console.log(formerDancers);
 ///i assume the nested data makes this unreachable outside that function?
 
 function buttonClicked(){
