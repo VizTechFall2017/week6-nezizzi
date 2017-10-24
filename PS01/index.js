@@ -4,6 +4,7 @@ var clicked=true;
 var formerDancers;
 var currentDancers;
 
+//still not sure how to do this
 var axislabel = ["None", "Diploma from Dance School", "Diploma from Performing Arts School", "Bachelor's Degree", " Advanced Diploma from Dance School", "Advanced Diploma from Performing Arts School","Graduate Degree"];
 
 //axes
@@ -57,7 +58,7 @@ d3.csv('./data.csv', function(dataIn) {
     console.log(currentDancers);
     console.log(formerDancers);
 
-    ScaleX.domain(formerDancers.map(function (d) {
+    ScaleX.domain(currentDancers.map(function (d) {
         return d.A6QUALS1
     }));
 
@@ -91,6 +92,10 @@ d3.csv('./data.csv', function(dataIn) {
 
 
 function drawPoints(pointData){
+
+    ScaleX.domain(pointData.map(function (d) {
+        return d.A6QUALS1
+    }));
 
     svg.selectAll('.beg')
         .data(pointData)
