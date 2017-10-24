@@ -64,12 +64,12 @@ d3.csv('./data.csv', function(dataIn) {
         })
         .entries(dataIn);
 
-    console.log(nestedData);
+    //console.log(nestedData);
     var currentDancers = nestedData.filter(function(d){return d.key == '1'})[0].values;
     var formerDancers = nestedData.filter(function(d){return d.key == '2'})[0].values;
 
-    console.log(currentDancers);
-    console.log(formerDancers);
+    //console.log(currentDancers);
+    //console.log(formerDancers);
 
     //x axis labels
     var testMap = d3.map();
@@ -84,23 +84,20 @@ d3.csv('./data.csv', function(dataIn) {
         {value: "D", text: "Did not answer"}
     ];
 
-    /*ScaleX.domain(function(testMap){
-        axislabel.forEach(function (d) {
-            testMap.set(d.value, d.text);
-        })
-        console.log(testMap.get(5));
-    });
-    console.log(testMap.get(5));*/
-
     ScaleX.domain(currentDancers.map(function(d){
         return d.A6QUALS1
     }));
+
 
     ScaleY.domain([0,30]);
 
     svg.append("g")
         .attr('transform','translate(0,400)')
-        .call(d3.axisBottom(ScaleX));
+        .call(d3.axisBottom(ScaleX))
+        .append('text', axislabel.forEach(function (d) {
+            testMap.set(d.value, d.text);
+        }));
+    console.log(testMap.get(5));
 
     svg.append("g")
         .call(d3.axisLeft(ScaleY));
@@ -192,8 +189,8 @@ function drawPoints(pointData){
     //$('[data-toggle="tooltip"]').tooltip();
 }
 
-console.log(currentDancers);
-console.log(formerDancers);
+//console.log(currentDancers);
+//console.log(formerDancers);
 ///i assume the nested data makes this unreachable outside that function?
 
 function buttonClicked(){
