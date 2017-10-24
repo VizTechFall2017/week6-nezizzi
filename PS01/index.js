@@ -94,9 +94,10 @@ d3.csv('./data.csv', function(dataIn) {
     svg.append("g")
         .attr('transform','translate(0,400)')
         .call(d3.axisBottom(ScaleX))
-        .append('text', axislabel.forEach(function (d) {
+        /*.call(d3.axisBottom(axislabel.forEach(function (d) {
             testMap.set(d.value, d.text);
-        }));
+            console.log(testMap.get(5));
+        })));*/
     console.log(testMap.get(5));
 
     svg.append("g")
