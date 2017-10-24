@@ -5,7 +5,7 @@ var formerDancers;
 var currentDancers;
 
 //still not sure how to do this
-var axislabel = ["None", "Diploma from Dance School", "Diploma from Performing Arts School", "Bachelor's Degree", " Advanced Diploma from Dance School", "Advanced Diploma from Performing Arts School","Graduate Degree"];
+var axislabel = ["None", "Diploma from Dance School", "Diploma from Performing Arts School", "Bachelor's Degree", " Advanced Diploma from Dance School", "Advanced Diploma from Performing Arts School","Graduate Degree", "Other", "Did not Answer"];
 
 //axes
 //var ScaleX = d3.scalePoint().domain(["None", "Diploma from Dance School", "Diploma from Performing Arts School", "Bachelor's Degree", " Advanced Diploma from Dance School", "Advanced Diploma from Performing Arts School","Graduate Degree"]).range([0, 800]);
@@ -55,6 +55,7 @@ d3.csv('./data.csv', function(dataIn) {
     console.log(nestedData);
     var currentDancers = nestedData.filter(function(d){return d.key == '1'})[0].values;
     var formerDancers = nestedData.filter(function(d){return d.key == '2'})[0].values;
+
     console.log(currentDancers);
     console.log(formerDancers);
 
