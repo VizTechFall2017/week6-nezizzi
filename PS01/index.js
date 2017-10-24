@@ -1,16 +1,26 @@
 var svg = d3.select('svg').append('g').attr('transform','translate(100,100)');
 
-var clicked=true;
+var clicked = true;
 var formerDancers;
 var currentDancers;
-
-//still not sure how to do this
-var axislabel = ["None", "Diploma from Dance School", "Diploma from Performing Arts School", "Bachelor's Degree", " Advanced Diploma from Dance School", "Advanced Diploma from Performing Arts School","Graduate Degree", "Other", "Did not Answer"];
 
 //axes
 //var ScaleX = d3.scalePoint().domain(["None", "Diploma from Dance School", "Diploma from Performing Arts School", "Bachelor's Degree", " Advanced Diploma from Dance School", "Advanced Diploma from Performing Arts School","Graduate Degree"]).range([0, 800]);
 var ScaleX = d3.scalePoint().domain(["1", "2", "3", "4", "5", "6","7"]).range([0, 800]);
 var ScaleY = d3.scaleLinear().range([400, 0]);
+
+var testMap = d3.map();
+
+var axislabel = [{value: 1, text: "None"},
+    {value: 2, text: "Diploma from Dance School"},
+    {value: 3, text: "Diploma from Performing Arts School"},
+    {value: 4, text: "Bachelor's Degree"},
+    {value: 5, text: " Advanced Diploma from Dance School"},
+    {value: 6, text: "Advanced Diploma from Performing Arts School"},
+    {value: 7, text: "Graduate Degree"},
+    {value: 8, text: "Other"},
+    {value: "D", text: "Did not answer"}
+];
 
 
 //AXIS LABELS
@@ -21,6 +31,8 @@ svg.append('text')
 svg.append('text')
     .text('Highest Dance Education Level')
     .attr('transform','translate(225, 450)');
+
+
 svg.append('text')
     .text('Age')
     .attr('transform', 'translate(-50,200)rotate(270)');
@@ -59,16 +71,38 @@ d3.csv('./data.csv', function(dataIn) {
     console.log(currentDancers);
     console.log(formerDancers);
 
-    ScaleX.domain(currentDancers.map(function (d) {
-        return d.A6QUALS1
-    }));
+    //x axis labels
+    var testMap = d3.map();
+    var axislabel = [{value: 1, text: "None"},
+        {value: 2, text: "Diploma from Dance School"},
+        {value: 3, text: "Diploma from Performing Arts School"},
+        {value: 4, text: "Bachelor's Degree"},
+        {value: 5, text: " Advanced Diploma from Dance School"},
+        {value: 6, text: "Advanced Diploma from Performing Arts School"},
+        {value: 7, text: "Graduate Degree"},
+        {value: 8, text: "Other"},
+        {value: "D", text: "Did not answer"}
+    ];
+
+    /*(ScaleX.domain(function(testMap){
+        axislabel.forEach(function (d) {
+            testMap.set(d.value, d.text);
+        })
+        console.log(testMap.get(5));
+    });
+    console.log(testMap.get(5));*/
+
+    
+
     ScaleY.domain([0,30]);
 
     svg.append("g")
         .attr('transform','translate(0,400)')
         .call(d3.axisBottom(ScaleX));
+
     svg.append("g")
         .call(d3.axisLeft(ScaleY));
+
 
     svg.selectAll('circles')
         .data(currentDancers)
@@ -158,6 +192,7 @@ function drawPoints(pointData){
 
 console.log(currentDancers);
 console.log(formerDancers);
+///i assume the nested data makes this unreachable outside that function?
 
 function buttonClicked(){
 
