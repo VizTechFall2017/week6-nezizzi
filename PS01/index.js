@@ -4,10 +4,10 @@ var clicked = true;
 var nestedData;
 var formerDancers;
 var currentDancers;
-
+var testMap = d3.map();
 //axes
 //var ScaleX = d3.scalePoint().domain(["None", "Diploma from Dance School", "Diploma from Performing Arts School", "Bachelor's Degree", " Advanced Diploma from Dance School", "Advanced Diploma from Performing Arts School","Graduate Degree"]).range([0, 800]);
-var ScaleX = d3.scalePoint().domain(["1", "2", "3", "4", "5", "6","7"]).range([0, 800]);
+var ScaleX = d3.scalePoint().range([0, 800]);
 var ScaleY = d3.scaleLinear().range([400, 0]);
 
 //AXIS LABELS
@@ -52,13 +52,13 @@ d3.csv('./data.csv', function(dataIn) {
         .entries(dataIn);
     console.log(nestedData);
 
-    var currentDancers = nestedData.filter(function(d){return d.key == '1'})[0].values;
-    var formerDancers = nestedData.filter(function(d){return d.key == '2'})[0].values;
+    currentDancers = nestedData.filter(function(d){return d.key == '1'})[0].values;
+    formerDancers = nestedData.filter(function(d){return d.key == '2'})[0].values;
     console.log(currentDancers);
     console.log(formerDancers);
 
     //x axis labels
-    var testMap = d3.map();
+
     var axislabel = [{value: 1, text: "None"},
         {value: 2, text: "Diploma from Dance School"},
         {value: 3, text: "Diploma from Performing Arts School"},
@@ -73,11 +73,11 @@ d3.csv('./data.csv', function(dataIn) {
     var LABEL= axislabel.forEach(function (d) {
         testMap.set(d.value, d.text);
     });
-    console.log(testMap);
-    console.log(testMap.get(5));
+    //console.log(testMap);
+    //console.log(testMap.get(5));
 
     ScaleX.domain(currentDancers.map(function(d){
-        return d.A6QUALS1
+        return  testMap.get(d.A6QUALS1)
     }));
     ScaleY.domain([0,30]);
 
@@ -116,15 +116,15 @@ d3.csv('./data.csv', function(dataIn) {
 
 
 function drawPoints(pointData){
-
+console.log(pointData);
     ScaleX.domain(pointData.map(function (d) {
-        return d.A6QUALS1
+        return testMap.get(d.A6QUALS1)
     }));
 
     svg.selectAll('.beg')
         .data(pointData)
         .attr('cx',function(d){   //look up values for all the attributes that might have changed, and draw the new circles
-            return ScaleX(d.A6QUALS1);
+            return ScaleX(testMap.get(d.A6QUALS1));
         })
         .attr('cy',function(d){
             return ScaleY(d.A8ABEGTR);
@@ -152,7 +152,7 @@ function drawPoints(pointData){
     svg.selectAll('.prof')
         .data(pointData)
         .attr('cx',function(d){
-            return ScaleX(d.A6QUALS1);
+            return ScaleX(testMap.get(d.A6QUALS1));
         })
         .attr('cy',function(d) {
             return ScaleY(d.A8CBGPCR);
